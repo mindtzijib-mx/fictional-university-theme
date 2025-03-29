@@ -1,5 +1,16 @@
 <?php
 
+require get_theme_file_path("/inc/search-route.php");
+
+// Function to add the author name field in the rest api for posts
+function university_custom_rest() {
+    register_rest_field( "post", "authorName", array(
+        "get_callback" => function() {return get_the_author();}
+    ));
+}
+
+add_action("rest_api_init", "university_custom_rest");
+
 function page_banner($args = NULL) {
     if (!isset($args["title"])) {
         $args["title"] = get_the_title();
